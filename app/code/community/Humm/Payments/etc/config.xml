@@ -9,7 +9,7 @@
         <jobs>
             <humm_payments>
                 <schedule>
-                    <cron_expr>*/30 * * * *</cron_expr>
+                    <cron_expr>*/50 * * * *</cron_expr>
                 </schedule>
                 <run>
                     <model>humm_payments/HummCron::execute</model>

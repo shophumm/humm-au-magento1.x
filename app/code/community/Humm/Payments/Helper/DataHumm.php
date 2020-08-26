@@ -9,8 +9,8 @@ class Humm_Payments_Helper_DataHumm extends Mage_Core_Helper_Abstract
 {
 
     const LAUNCH_TIME_URL = 'https://humm-variables.s3-ap-southeast-2.amazonaws.com/nz-launch-time.txt';
-    const LAUNCH_TIME_DEFAULT = "2030-05-11 00:00:00 UTC";
-    const LAUNCH_TIME_CHECK_ENDS = "2030-11-18 00:00:00 UTC";
+    const LAUNCH_TIME_DEFAULT = "2019-05-11 00:00:00 UTC";
+    const LAUNCH_TIME_CHECK_ENDS = "2019-11-18 00:00:00 UTC";
     const Log_file = 'humm.log';
     const URLS = [
         'AU' => [
@@ -45,23 +45,24 @@ class Humm_Payments_Helper_DataHumm extends Mage_Core_Helper_Abstract
      */
     public static function getTitle()
     {
-        $launch_time_string = self::getLaunchDate();
-        if ($launch_time_string) {
-            $is_after = (time() - strtotime($launch_time_string) >= 0) || Mage::getStoreConfig('payment/humm_payments/force_humm');
-        }
-        else {
-            $is_after = true;
-        }
+//        $launch_time_string = self::getLaunchDate();
+//        if ($launch_time_string) {
+//            $is_after = (time() - strtotime($launch_time_string) >= 0) || Mage::getStoreConfig('payment/humm_payments/force_humm');
+//        }
+//        else {
+//            $is_after = true;
+//        }
 
         $checkCountry = Mage::getStoreConfig('payment/humm_payments/country_currency/specific_countries');
 
         if ($checkCountry == 'NZ') {
-            if ($is_after){
-                return 'NZ_Humm';
-            }
-            else {
-                return 'NZ_Oxipay';
-            }
+//            if ($is_after){
+//                return 'NZ_Humm';
+//            }
+//            else {
+//                return 'NZ_Oxipay';
+//            }
+            return 'NZ_Humm';
         }
         else {
             return 'AU';

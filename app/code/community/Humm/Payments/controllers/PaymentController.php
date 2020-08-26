@@ -70,7 +70,7 @@ class Humm_Payments_PaymentController extends Mage_Core_Controller_Front_Action
             return false;
         }
 
-        if ($order->getBillingAddress()->getCountry() != $this->getSpecificCountry() || $order->getOrderCurrencyCode() != $specificCurrency) {
+        if ($order->getBillingAddress()->getCountry() != $this->getSpecificCountry()) {
             Mage::getSingleton('checkout/session')->addError("Orders from this country are not supported by humm. Please select a different payment option.");
             return false;
         }
@@ -169,7 +169,6 @@ class Humm_Payments_PaymentController extends Mage_Core_Controller_Front_Action
             $cancel_signature = Humm_Payments_Helper_Crypto::generateSignature($cancel_signature_query, $apiKey);
             $data = array(
                 'x_currency' => str_replace(PHP_EOL, ' ', $order->getOrderCurrencyCode()),
-//               'x_url_callback' => str_replace(PHP_EOL, ' ', Humm_Payments_Helper_DataHumm::getCompleteUrl()),
                 'x_url_complete' => str_replace(PHP_EOL, ' ', Humm_Payments_Helper_DataHumm::getCompleteUrl()),
                 'x_url_cancel' => str_replace(PHP_EOL, ' ', Humm_Payments_Helper_DataHumm::getCancelledUrl($orderId) . "&signature=" . $cancel_signature),
                 'x_shop_name' => str_replace(PHP_EOL, ' ', Mage::app()->getStore()->getCode()),
