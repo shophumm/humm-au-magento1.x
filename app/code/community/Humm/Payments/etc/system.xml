@@ -69,7 +69,7 @@
                                         <config_path>payment/humm_payments/private_key</config_path>
                                         <frontend_type>obscure</frontend_type>
                                         <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
-                                        <sort_order>50</sort_order>
+                                        <sort_order>60</sort_order>
                                         <show_in_default>1</show_in_default>
                                         <show_in_website>1</show_in_website>
                                         <show_in_store>1</show_in_store>
@@ -79,7 +79,7 @@
                                         <tooltip>Enter the "Humm Public Key/Merchant No". This can be located in your Humm partner dashboard. Note: these are different for "Production" and "Sandbox" environments.</tooltip>
                                         <config_path>payment/humm_payments/public_key</config_path>
                                         <frontend_type>text</frontend_type>
-                                        <sort_order>60</sort_order>
+                                        <sort_order>50</sort_order>
                                         <show_in_default>1</show_in_default>
                                         <show_in_website>1</show_in_website>
                                         <show_in_store>1</show_in_store>
