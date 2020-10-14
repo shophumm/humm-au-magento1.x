@@ -7,32 +7,10 @@
  */
 class Humm_Payments_Helper_DataHumm extends Mage_Core_Helper_Abstract
 {
-
     const LAUNCH_TIME_URL = 'https://humm-variables.s3-ap-southeast-2.amazonaws.com/nz-launch-time.txt';
     const LAUNCH_TIME_DEFAULT = "2019-05-11 00:00:00 UTC";
     const LAUNCH_TIME_CHECK_ENDS = "2019-11-18 00:00:00 UTC";
     const Log_file = 'humm.log';
-    const URLS = [
-        'AU' => [
-            'sandboxURL' => 'https://integration-cart.shophumm.com.au/Checkout?platform=Default',
-            'liveURL' => 'https://cart.shophumm.com.au/Checkout?platform=Default',
-            'sandbox_refund_address' => 'https://integration-buyerapi.shophumm.com.au/api/ExternalRefund/v1/processrefund',
-            'live_refund_address' => 'https://buyerapi.shophumm.com.au/api/ExternalRefund/v1/processrefund',
-        ],
-        'NZ_Oxipay' => [
-            'sandboxURL' => 'https://securesandbox.oxipay.co.nz/Checkout?platform=Default',
-            'liveURL' => 'https://secure.oxipay.co.nz/Checkout?platform=Default',
-            'sandbox_refund_address' => 'https://portalssandbox.oxipay.co.nz/api/ExternalRefund/processrefund',
-            'live_refund_address' => 'https://portals.oxipay.co.nz/api/ExternalRefund/processrefund',
-        ],
-        'NZ_Humm' => [
-            'sandboxURL' => 'https://integration-cart.shophumm.co.nz/Checkout?platform=Default',
-            'liveURL' => 'https://cart.shophumm.co.nz/Checkout?platform=Default',
-            'sandbox_refund_address' => 'https://integration-buyerapi.shophumm.co.nz/api/ExternalRefund/v1/processrefund',
-            'live_refund_address' => 'https://buyerapi.shophumm.co.nz/api/ExternalRefund/v1/processrefund',
-        ]
-    ];
-
     /**
      *
      */
@@ -40,33 +18,17 @@ class Humm_Payments_Helper_DataHumm extends Mage_Core_Helper_Abstract
     {
 
     }
+
     /**
      * @return string
      */
+
     public static function getTitle()
     {
-//        $launch_time_string = self::getLaunchDate();
-//        if ($launch_time_string) {
-//            $is_after = (time() - strtotime($launch_time_string) >= 0) || Mage::getStoreConfig('payment/humm_payments/force_humm');
-//        }
-//        else {
-//            $is_after = true;
-//        }
+        $is_after = Mage::getStoreConfig('payment/HummPayments/force_humm');
+        $title = ($is_after || Mage::getStoreConfig('payment/humm_payments/country_currency/specific_countries') == 'AU') ? 'Humm' : 'Oxipay';
 
-        $checkCountry = Mage::getStoreConfig('payment/humm_payments/country_currency/specific_countries');
-
-        if ($checkCountry == 'NZ') {
-//            if ($is_after){
-//                return 'NZ_Humm';
-//            }
-//            else {
-//                return 'NZ_Oxipay';
-//            }
-            return 'NZ_Humm';
-        }
-        else {
-            return 'AU';
-        }
+        return $title;
     }
 
     /**
@@ -75,7 +37,6 @@ class Humm_Payments_Helper_DataHumm extends Mage_Core_Helper_Abstract
      */
     public static function getCheckoutURL()
     {
-
         $checkoutUrl = Mage::getStoreConfig('payment/humm_payments/path');
         if (isset($checkoutUrl) && strtolower(substr($checkoutUrl, 0, 4)) == 'https') {
             return $checkoutUrl;
@@ -83,11 +44,16 @@ class Humm_Payments_Helper_DataHumm extends Mage_Core_Helper_Abstract
             $title = self::getTitle();
             $country = Mage::getStoreConfig('payment/humm_payments/country_currency/specific_countries');
             $country_domain = $country == 'NZ' ? '.co.nz' : '.com.au';
+            $domainsTest = array(
+                'Humm' => 'integration-cart.shophumm',
+                'Oxipay' => 'securesandbox.oxipay'
+            );
+            $domains = array(
+                'Humm' => 'cart.shophumm',
+                'Oxipay' => 'secure.oxipay'
+            );
 
-            $isSandbox = Mage::getStoreConfig('payment/humm_payments/environment') == 'sandbox' ? 'sandboxURL' : 'liveURL';
-            $checkoutUrl = 'https://' . self::URLS[$title][$isSandbox] . $country_domain . '/Checkout?platform=Default';
-            Mage::log(self::URLS[$title][$isSandbox],7,self::Log_file);
-            return self::URLS[$title][$isSandbox];
+            return 'https://' . (Mage::getStoreConfig('payment/humm_payments/environment') == 'sandbox' ? $domainsTest[$title] : $domains[$title]) . $country_domain . '/Checkout?platform=Default';
         }
     }
 
@@ -101,11 +67,18 @@ class Humm_Payments_Helper_DataHumm extends Mage_Core_Helper_Abstract
         $title = self::getTitle();
 
         $isSandbox = Mage::getStoreConfig('payment/humm_payments/environment') == 'sandbox' ? 'sandbox_refund_address' : 'live_refund_address';
+        $country = Mage::getStoreConfig('payment/humm_payments/country_currency/specific_countries');
+        $country_domain = $country == 'NZ' ? '.co.nz' : '.com.au';
+        $domainsTest = array(
+            'Humm' => 'integration-buyerapi.shophumm',
+            'Oxipay' => 'portalssandbox.oxipay'
+        );
+        $domains = array(
+            'Humm' => 'buyerapi.shophumm',
+            'Oxipay' => 'portals.oxipay'
+        );
 
-        $refundUrl = self::URLS[$title][$isSandbox];
-
-        Mage::log(sprintf("%s refundURL",$refundUrl),7,self::Log_file);
-        return $refundUrl;
+        return 'https://' . (Mage::getStoreConfig('payment/humm_payments/environment') == 'sandbox' ? $domainsTest[$title] : $domains[$title]) . $country_domain . '/api/ExternalRefund/v1/processrefund';
     }
 
     /**
@@ -140,7 +113,7 @@ class Humm_Payments_Helper_DataHumm extends Mage_Core_Helper_Abstract
             Mage::log(sprintf("Get ForceHumm %s Url Wrong %s", self::LAUNCH_TIME_URL, $exception->getMessage()), 4, self::Log_file);
             return false;
         }
-        return strtotime($remote_launch_time_string)>= strtotime(self::LAUNCH_TIME_DEFAULT) ? strtotime($remote_launch_time_string):strtotime(self::LAUNCH_TIME_DEFAULT);
+        return strtotime($remote_launch_time_string) >= strtotime(self::LAUNCH_TIME_DEFAULT) ? strtotime($remote_launch_time_string) : strtotime(self::LAUNCH_TIME_DEFAULT);
     }
 }
 
