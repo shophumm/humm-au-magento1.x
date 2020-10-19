@@ -11,6 +11,7 @@ class Humm_Payments_Helper_DataHumm extends Mage_Core_Helper_Abstract
     const LAUNCH_TIME_DEFAULT = "2019-05-11 00:00:00 UTC";
     const LAUNCH_TIME_CHECK_ENDS = "2019-11-18 00:00:00 UTC";
     const Log_file = 'humm.log';
+
     /**
      *
      */
@@ -25,8 +26,8 @@ class Humm_Payments_Helper_DataHumm extends Mage_Core_Helper_Abstract
 
     public static function getTitle()
     {
-        $is_after = Mage::getStoreConfig('payment/HummPayments/force_humm');
-        $title = ($is_after || Mage::getStoreConfig('payment/humm_payments/country_currency/specific_countries') == 'AU') ? 'Humm' : 'Oxipay';
+        $is_after = Mage::getStoreConfig('payment/humm_payments/force_humm');
+        $title = ($is_after || (Mage::getStoreConfig('payment/humm_payments/country_currency/specific_countries') == 'AU')) ? 'Humm' : 'Oxipay';
 
         return $title;
     }
@@ -65,7 +66,6 @@ class Humm_Payments_Helper_DataHumm extends Mage_Core_Helper_Abstract
     {
 
         $title = self::getTitle();
-
         $isSandbox = Mage::getStoreConfig('payment/humm_payments/environment') == 'sandbox' ? 'sandbox_refund_address' : 'live_refund_address';
         $country = Mage::getStoreConfig('payment/humm_payments/country_currency/specific_countries');
         $country_domain = $country == 'NZ' ? '.co.nz' : '.com.au';

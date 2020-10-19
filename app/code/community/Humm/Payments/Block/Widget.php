@@ -165,7 +165,6 @@ class Humm_Payments_Block_Widget extends Mage_Core_Block_Template
                 $selectors[$widgetType] = $helper->getConfig()->getValue($path . '/selector');
             }
         }
-
         return $selectors;
     }
 
