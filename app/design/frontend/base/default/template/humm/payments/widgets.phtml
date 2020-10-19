@@ -2,48 +2,57 @@
 if (!$this->isActive()) {
     return;
 }
-$country = $this->getCountry();
 
+if ($this->getElementSelectors()) {
+    $bpiSelector = $this->getElementSelectors();
+}
+$country = $this->getCountry();
 if ($country == "AU") {
     if (!strcmp($this->getWidgetPageType(), 'product')) {
+
         $productPrice = $this->getProduct();
-        $jsScript = sprintf("%s%s%s", '<script src="https://widgets.shophumm.com.au/content/scripts/price-info.js?productPrice=', $productPrice, '&LittleOnly&element=%23messages_product_view"></script>');
+
+        if ($bpiSelector['product_widget']) {
+            $jsScript = sprintf("%s%s%s%s%s", '<script src="https://widgets.shophumm.com.au/content/scripts/price-info.js?productPrice=', $productPrice, '&LittleOnly&element=', urlencode($bpiSelector['product_widget']), '"></script>');
+        } else {
+            $jsScript = sprintf("%s%s%s", '<script src="https://widgets.shophumm.com.au/content/scripts/price-info.js?productPrice=', $productPrice, '&LittleOnly&element=%23messages_product_view"></script>');
+        }
         echo $jsScript;
     }
 
     if (!strcmp($this->getWidgetPageType(), 'cart')) {
         $cartPrice = $this->getCart();
-        $jsCart = sprintf("%s%s%s", '<script src="https://widgets.shophumm.com.au/content/scripts/price-info.js?productPrice=', $cartPrice, '&LittleOnly&element=%23shopping-cart-totals-table"></script>');
+
+        if ($bpiSelector['cart_widget']) {
+            $jsCart = sprintf("%s%s%s%s%s", '<script src="https://widgets.shophumm.com.au/content/scripts/price-info.js?productPrice=', $cartPrice, '&LittleOnly&element=', urlencode($bpiSelector['cart_widget']), '"></script>');
+        } else {
+            $jsCart = sprintf("%s%s%s", '<script src="https://widgets.shophumm.com.au/content/scripts/price-info.js?productPrice=', $cartPrice, '&LittleOnly&element=%23shopping-cart-totals-table"></script>');
+        }
         echo $jsCart;
     }
 }
 
 if ($country == "NZ") {
     if (!strcmp($this->getWidgetPageType(), 'product')) {
-        $productPrice = $this->getProduct();
-        if (floatval($productPrice) <1000) {
-            $jsScript = sprintf("%s%s%s", '<script src="https://widgets.shophumm.co.nz/content/scripts/price-info.js?productPrice=', $productPrice, '&LittleThings&little=F5&element=%23messages_product_view"></script>');
-            $jsScript = $jsScript . sprintf("%s%s%s", '<script src="https://widgets.shophumm.co.nz/content/scripts/price-info.js?productPrice=', $productPrice, '&LittleThings&little=w10&element=%23messages_product_view"></script>');
-            echo $jsScript;
-        }
-        else
-        {
-            $ec_pattern = sprintf("%s%s%s%s", '<script src= "https://widgets.shophumm.co.nz/content/scripts/price-info.js?productPrice=', $productPrice, '&big=M6', '&element=%23messages_product_view"></script>');
-            echo $ec_pattern;
-        }
 
+        $productPrice = $this->getProduct();
+
+        if ($bpiSelector['product_widget']) {
+            $jsScript = sprintf("%s%s%s%s%s", '<script src="https://widgets.shophumm.co.nz/content/scripts/price-info.js?productPrice=', $productPrice, '&LittleOnly&element=', urlencode($bpiSelector['product_widget']), '"></script>');
+        } else {
+            $jsScript = sprintf("%s%s%s", '<script src="https://widgets.shophumm.co.nz/content/scripts/price-info.js?productPrice=', $productPrice, '&LittleOnly&element=%23messages_product_view"></script>');
+        }
+        echo $jsScript;
     }
 
     if (!strcmp($this->getWidgetPageType(), 'cart')) {
         $cartPrice = $this->getCart();
-        if (floatval($cartPrice) < 1000) {
-            $jsCart = sprintf("%s%s%s", '<script src="https://widgets.shophumm.co.nz/content/scripts/price-info.js?productPrice=', $cartPrice, '&LittleThings&little=F5&element=%23shopping-cart-totals-table"></script>');
-            $jsCart = $jsCart . sprintf("%s%s%s", '<script src="https://widgets.shophumm.co.nz/content/scripts/price-info.js?productPrice=', $cartPrice, '&LittleThings&little=w10&element=%23shopping-cart-totals-table"></script>');
-            echo $jsCart;
+
+        if ($bpiSelector['cart_widget']) {
+            $jsCart = sprintf("%s%s%s%s%s", '<script src="https://widgets.shophumm.co.nz/content/scripts/price-info.js?productPrice=', $cartPrice, '&LittleOnly&element=', urlencode($bpiSelector['cart_widget']), '"></script>');
+        } else {
+            $jsCart = sprintf("%s%s%s", '<script src="https://widgets.shophumm.co.nz/content/scripts/price-info.js?productPrice=', $cartPrice, '&LittleOnly&element=%23shopping-cart-totals-table"></script>');
         }
-        else {
-            $ec_pattern = sprintf("%s%s%s%s", '<script src= "https://widgets.shophumm.co.nz/content/scripts/price-info.js?productPrice=', $cartPrice, '&big=M6', '&element=%2Ecart-totals"></script>');
-            echo $ec_pattern;
-        }
+        echo $jsCart;
     }
 }
