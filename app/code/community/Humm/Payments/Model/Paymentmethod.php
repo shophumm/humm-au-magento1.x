@@ -9,7 +9,7 @@ class Humm_Payments_Model_Paymentmethod extends Mage_Payment_Model_Method_Abstra
     protected $_formBlockType = 'humm_payments/form_HummPayments';
     protected $_infoBlockType = 'humm_payments/info_HummPayments';
     protected $_isInitializeNeeded = true;
-    protected $_canUseInternal = false;
+    protected $_canUseInternal = true;
     protected $_canUseForMultishipping = false;
     protected $_canUseCheckout = true;
     protected $_canRefund = true;
