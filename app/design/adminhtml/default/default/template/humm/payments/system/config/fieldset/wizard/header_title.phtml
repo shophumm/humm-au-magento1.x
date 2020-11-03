@@ -1,0 +1,98 @@
+<?php
+    $version = $this->getVersion();
+    $logo = $this->escapeUrl($this->getLogo());
+    $element = $this->getElement();
+    $groupConfig = $this->getConfig();
+    $notification = $this->getData('notification');
+    $legend = $element->getLegend();
+    $comment = $element->getComment();
+    $stateUrl = $this->getUrl('*/*/state');
+?>
+
+<div class="config-heading">
+    <div class="heading">
+        <span class="heading-title">
+            <?php if(!empty($logo)) : ?>
+                <img class="logo" alt="<?php echo $this->escapeHtml($legend); ?>"
+                title="<?php echo $this->escapeHtml($legend); ?>"
+                src="<?php echo $this->escapeUrl($logo); ?>"/>
+            <?php endif; ?>
+        </span>
+        <span class="heading-intro">
+            <?php if (!empty($comment)) : ?>
+                <?php echo $comment; ?>
+            <?php endif; ?>
+        </span>
+    </div>
+
+    <div class="button-container">
+        <button type="button" class="button" id="<?php echo $element->getHtmlId(); ?>-head"
+        onclick="toggleSolution.call(
+            this,
+            '<?php echo $element->getHtmlId(); ?>',
+            '<?php echo $this->escapeUrl($stateUrl); ?>'
+        );
+        return false;">
+            <span class="state-closed"><?php echo $this->escapeHtml($this->__('Configure')); ?></span>
+            <span class="state-opened"><?php echo $this->escapeHtml($this->__('Close')); ?></span>
+        </button>
+    </div>
+
+</div>
+
+<style type="text/css">
+.humm-payment.enabled .config-heading {
+    background-image: none;
+}
+.humm-payment.enabled .config-heading .heading .heading-title {
+    background: url(/skin/adminhtml/default/default/images/icon-enabled.png) no-repeat right center;
+    background-position: right center;
+    padding: 10px 25px 10px 0;
+}
+.humm-payment .config-heading .heading a {
+    font-size: 12px;
+    margin-left: 0;
+    color: #4f4f4f;
+}
+.humm-payment .config-heading .heading .logo {
+    height: 25px;
+    line-height: 40px;
+    vertical-align: middle;
+    margin: 6px 0px;
+}
+
+.humm-payment .config-heading .heading .legend {
+    line-height: 40px;
+    vertical-align: middle;
+    padding-left: 10px;
+    font-size: 14px;
+}
+.humm-payment .config-heading .heading .heading-intro {
+    font-size: 12px;
+    line-height: 2em;
+}
+</style>
+
+<script type="text/javascript">
+//<![CDATA[
+
+toggleSolution = function(id, url) {
+    var doScroll = false;
+    Fieldset.toggleCollapse(id, url);
+    if ($(this).hasClassName("open")) {
+        $$(".with-button button.button").each(function(button) {
+            if (button != this && $(button).hasClassName("open")) {
+                $(button).click();
+                doScroll = true;
+            }
+        }.bind(this));
+    }
+    if (doScroll) {
+        var pos = Element.cumulativeOffset($(this));
+        window.scrollTo(pos[0], pos[1] - 45);
+    }
+}
+
+//]]>
+</script>
+
