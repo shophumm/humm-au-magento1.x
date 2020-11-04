@@ -7,14 +7,10 @@
  */
 class Humm_Payments_Block_Info_HummPayments extends Mage_Payment_Block_Info
 {
-
-
-    protected $_template = 'humm/payment/method/info/default.phtml';
-
     protected function _construct()
     {
         parent::_construct();
-        $this->setTemplate($this->_template);
+        $this->setTemplate('humm/payments/method/info/default.phtml');
     }
 
 }
