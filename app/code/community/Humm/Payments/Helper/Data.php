@@ -29,7 +29,7 @@ class Humm_Payments_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getCurrentVersion()
     {
-        return trim((string) Mage::getConfig()->getNode()->modules->Humm_Payments->version);
+        return trim((string)Mage::getConfig()->getNode()->modules->Humm_Payments->version);
     }
 
     /**
@@ -64,7 +64,27 @@ class Humm_Payments_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return Mage::getSingleton('customer/session');
     }
+    /**
+     * @return mixed
+     */
+    public function getCheckoutValid()
+    {
+        $countryValid = true;
+        $amountValid = false;
+        $quoteTotal = Mage::getSingleton('checkout/session')->getQuote()->getGrandTotal();
+        $billAddress = Mage::getSingleton('checkout/session')->getQuote()->getShippingAddress()->getData();
+        $shippingAddress = Mage::getSingleton('checkout/session')->getQuote()->getBillingAddress()->getData();
+        $configCountry = $this->getConfig()->getValue(Humm_Payments_Model_Config::CONFIG_SPECIFIC_COUNTRIES_PATH);
+        $minAmount = Mage::getStoreConfig('payment/humm_payments/min_order_total');
 
+        if ((isset($billAddress['country_id']) && $billAddress['country_id'] != $configCountry) && (isset($shippingAddress) && $shippingAddress != $configCountry)) {
+            $countryValid = false;
+        }
+        if (floatval($minAmount) < floatval($quoteTotal)) {
+            $amountValid = true;
+        }
+        return $amountValid && $countryValid;
+    }
 
     /**
      * get payment method currently been used

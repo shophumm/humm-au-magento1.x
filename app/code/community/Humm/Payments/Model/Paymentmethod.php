@@ -5,6 +5,11 @@
  */
 class Humm_Payments_Model_Paymentmethod extends Mage_Payment_Model_Method_Abstract
 {
+
+    /**
+     * @var null
+     */
+    protected $_config = null;
     protected $_code = 'humm_payments';
     protected $_formBlockType = 'humm_payments/form_HummPayments';
     protected $_infoBlockType = 'humm_payments/info_HummPayments';
@@ -25,6 +30,11 @@ class Humm_Payments_Model_Paymentmethod extends Mage_Payment_Model_Method_Abstra
         return Mage::getUrl('humm_payments/Payment/start', array('_secure' => false));
     }
 
+    /**
+     * @param Varien_Object $payment
+     * @param float $amount
+     * @return Mage_Payment_Model_Abstract|void
+     */
     public function refund(Varien_Object $payment, $amount)
     {
         $url = Humm_Payments_Helper_DataHumm::getRefundUrl();
@@ -109,5 +119,38 @@ class Humm_Payments_Model_Paymentmethod extends Mage_Payment_Model_Method_Abstra
             }
         }
         return $head;
+    }
+
+
+    /**
+     * @return Mage_Core_Helper_Abstract|Mage_Payment_Helper_Data
+     */
+    protected function _getHelper()
+    {
+        return Mage::helper('humm_payments');
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getConfig()
+    {
+        if ($this->_config == null) {
+            $this->_config = $this->_getHelper()->getConfig();
+        }
+        return $this->_config;
+    }
+
+    /**
+     * @param null $quote
+     * @return bool
+     */
+    public function isAvailable($quote = null)
+    {
+           if ($this->_getHelper()->getCheckoutValid())
+               return parent::isAvailable($quote) && $this->getConfig()->isMethodAvailable();
+           else
+               return false;
     }
 }
