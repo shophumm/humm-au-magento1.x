@@ -1,32 +1,7 @@
-<?php
-    $logo = $this->getLogo();
-    $title = $this->getMethod()->getTitle();
-?>
-
 <div id="humm_payment_info">
-    <?php if(!empty($logo)) : ?>
-        <img src="<?php echo $this->escapeUrl($logo); ?>" alt="Humm Payment"/>
-    <?php endif; ?>
+        <img src="<?php echo Mage::getDesign()->getSkinUrl( "images/Humm/humm-logo.png" ) ?>"
+             style="width:auto;height:30px;"/>
 </div>
-
-<?php if ($specificInfo = $this->getSpecificInformation()) : ?>
-<table>
-    <?php foreach ($specificInfo as $label => $value): ?>
-    <tr>
-
-        <td>
-            <?php echo $this->escapeHtml($label); ?>:
-        </td>
-        <td>
-            <?php echo $this->escapeHtml(nl2br(implode("\n", $this->getValueAsArray($value, true)))); ?>
-        </td>
-    </tr>
-    <?php endforeach; ?>
-</table>
-<?php endif; ?>
-
-<?php echo $this->getChildHtml(); ?>
-
 <style type="text/css">
 #humm_payment_info img {
     height: 36px;
