@@ -13,10 +13,6 @@ class Humm_Payments_Block_Form_HummPayments extends Mage_Payment_Block_Form {
         if ( $country == 'NZ' ) {
             $this->updateLaunchDate();
         }
-        $mark = Mage::getConfig()->getBlockClassName( 'core/template' );
-        $mark = new $mark;
-        $mark->setTemplate('humm/payments/mark.phtml');
-        $this->setMethodLabelAfterHtml( $mark->toHtml() );
         parent::_construct();
         $this->setTemplate( 'humm/payments/form.phtml' );
     }

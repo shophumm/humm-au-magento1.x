@@ -4,19 +4,19 @@
             <?php
             $launch_time_string = Mage::getStoreConfig( 'payment/HummPayments/launch_time_string' );
             $is_after           = ( time() - strtotime( $launch_time_string ) >= 0 ) || Mage::getStoreConfig( 'payment/HummPayments/force_humm' );
-//            if ( $is_after || Mage::getStoreConfig( 'payment/HummPayments/specificcountry' ) == 'AU' ) {
-//                ?>
-<!--                <img src="--><?php //echo Mage::getDesign()->getSkinUrl( "images/Humm/humm-logo.png" ) ?><!--"-->
-<!--                     style="width:auto;height:15px;margin-right:6px;display:inline;"/>-->
-<!--                Pay in slices. No interest ever.  -->
-<!--                --><?php
-//            } else {
-//                ?>
-<!--                <img src="--><?php //echo Mage::getDesign()->getSkinUrl( "images/Humm/oxipay-logo.png" ) ?><!--"-->
-<!--                     style="width:auto;height:16px;margin-right:6px;display:inline;"/>-->
-<!--                <strong> the smarter way to pay.</strong><br>Shop today, pay over time. 4 easy fortnightly payments.-->
-<!--                --><?php
-//            }
+            if ( $is_after || Mage::getStoreConfig( 'payment/HummPayments/specificcountry' ) == 'AU' ) {
+                ?>
+                <img src="<?php echo Mage::getDesign()->getSkinUrl( "images/Humm/humm-logo.png" ) ?>"
+                     style="width:auto;height:15px;margin-right:6px;display:inline;"/>
+                Pay in slices. No interest ever.
+                <?php
+            } else {
+                ?>
+                <img src="<?php echo Mage::getDesign()->getSkinUrl( "images/Humm/oxipay-logo.png" ) ?>"
+                     style="width:auto;height:16px;margin-right:6px;display:inline;"/>
+                <strong> the smarter way to pay.</strong><br>Shop today, pay over time. 4 easy fortnightly payments.
+                <?php
+            }
             ?>
         </p>
     </li>
