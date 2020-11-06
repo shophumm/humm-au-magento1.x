@@ -353,6 +353,7 @@ class Humm_Payments_PaymentController extends Mage_Core_Controller_Front_Action
     {
         if ($order->getId() && $order->getState() != Mage_Sales_Model_Order::STATE_CANCELED) {
             $order->registerCancellation("Order #" . ($order->getId()) . " was canceled by Humm Payment or customer.")->save();
+            $this->restoreCart($order);
         }
     }
 
