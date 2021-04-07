@@ -19,21 +19,21 @@ New Version 2.0 installation
 ##Copy following files 
 
 
-/app/code/community/Humm/
+app/code/community/Humm/
 
-/app/design/frontend/base/default/template/humm/payments/
+app/design/frontend/base/default/template/humm/payments/
 
-/app/design/frontend/base/default/layout/humm/
+app/design/frontend/base/default/layout/humm/
 
-/app/design/adminhtml/base/default/template/HummPayments/
+app/design/adminhtml/base/default/template/HummPayments/
 
-/app/design/adminhtml/default/default/template/humm/payments
+app/design/adminhtml/default/default/template/humm/payments
 
-/app/etc/modules/Humm_HummPayments.xml
+app/etc/modules/Humm_HummPayments.xml
 
-/skin/frontend/base/default/images/Humm/
+skin/frontend/base/default/images/Humm/
 
-/skin/adminhtml/base/default/images/Humm/
+skin/adminhtml/base/default/images/Humm/
 
 
 ##To conclude,copy app and skin to the same name folders of magento1 website
@@ -59,7 +59,7 @@ New functions for Humm-AU
 
 9. Log file rebuild 
 
-10.Dynamic widgets show position (TBC)
+10.Dynamic widgets show position
 
 11.Remove unnecessary hardcoded
 
@@ -72,6 +72,26 @@ New functions for Humm-AU
 15.Clean span of days configure in the admin, enable/disable configure in the admin
 
 16.Crontab time set in the config.xml default is  */50 * * * *
+
+17. new BPI in the admin console
+
+Display Humm Payment marketing banner and popup on home page to give customers necessary information and increase conversions
+Product Page
+
+Widget
+
+Enabled              Yes
+
+javascript URL       https://bpi.humm-au.com/au/content/scripts/price-info_sync.js
+ 		
+Element selector    .product-shop .product-options-bottom
+
+author: roger.bi@fleixgroup.com.au
+
+
+ 	
+
+
 
 
 
