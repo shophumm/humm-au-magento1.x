@@ -16,6 +16,8 @@ class Humm_Payments_Block_Widget extends Mage_Core_Block_Template
     const CONFIG_ENVIRONMENT_PATH = 'payment/humm_payments/environment';
     const CONFIG_HOME_PAGE_PATH = 'web/default/cms_home_page';
 
+    const CONFIG_WIDGET_PRODUCT_JS = 'product_page/widget/jssection';
+
     protected $_supportedWidgetTypes = array('widget', 'banner');
 
     /**
@@ -29,6 +31,15 @@ class Humm_Payments_Block_Widget extends Mage_Core_Block_Template
     public function getMerchantId()
     {
         return $this->getConfig()->getValue(self::CONFIG_PUBLIC_KEY_PATH);
+    }
+
+    /**
+     *
+     */
+
+    public function getWidgetUrl() {
+
+        return $this->getConfig()->getValue(self::CONFIG_WIDGET_PATH_PREFIX.self::CONFIG_WIDGET_PRODUCT_JS);
     }
 
     /**
