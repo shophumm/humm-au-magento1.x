@@ -7,6 +7,7 @@ if ($this->getElementSelectors()) {
     $bpiSelector = $this->getElementSelectors();
 }
 
+
 if ($this->getMerchantId()) {
     $bpiMerchantId = $this->getMerchantId();
 }
@@ -15,14 +16,26 @@ if ($this->getWidgetUrl()) {
     $bpiJS = $this->getWidgetUrl();
 }
 
+if ($this->getPriceSelector()) {
+    $bpiPriceSelector = $this->getPriceSelector();
+}
+$productPrice = $this->getProduct();
+
+if ($this->getPriceSelector() ){
+    $priceSelector = '?price-selector='.trim($this->getPriceSelector());
+}
+else
+{
+    $priceSelector  = '?productPrice='.$productPrice;
+}
 $country = $this->getCountry();
+
 if ($country == "AU") {
     if (!strcmp($this->getWidgetPageType(), 'product')) {
-        $productPrice = $this->getProduct();
         if ($bpiSelector['product_widget']) {
-            $jsScript = sprintf("%s%s%s%s%s%s%s%s%s", '<script src="',$bpiJS,'?productPrice=', $productPrice, '&merchantId=',trim($bpiMerchantId),'&element=', urlencode($bpiSelector['product_widget']), '"></script>');
+            $jsScript = sprintf("%s%s%s%s%s%s%s%s", '<script src="',$bpiJS,$priceSelector,'&merchantId=',trim($bpiMerchantId),'&element=', urlencode($bpiSelector['product_widget']), '"></script>');
         } else {
-            $jsScript = sprintf("%s%s%s%s%s%s", '<script src="',$bpiJS, $productPrice,'&merchantId=',trim($bpiMerchantId),'&element=%23messages_product_view"></script>');
+            $jsScript = sprintf("%s%s%s%s%s%s", '<script src="',$bpiJS, $priceSelector,'&merchantId=',trim($bpiMerchantId),'&element=%23messages_product_view"></script>');
         }
         echo $jsScript;
     }
