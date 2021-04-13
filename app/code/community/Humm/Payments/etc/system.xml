@@ -343,7 +343,7 @@
                                                     </jssection>
 
                                                     <selector translate="label comment">
-                                                        <label>Element selector</label>
+                                                        <label>Element showing selector</label>
                                                         <tooltip>Enter HTML element selector to insert widget in any places</tooltip>
                                                         <config_path>payment/humm_payments/widgets/product_page/widget/selector</config_path>
                                                         <sort_order>20</sort_order>
@@ -355,6 +355,22 @@
                                                             <enabled>1</enabled>
                                                         </depends>
                                                     </selector>
+
+                                                    <priceselector translate="label comment">
+                                                        <label>Element selector</label>
+                                                        <tooltip>Enter HTML price selector to get price from.if being empty, default price is product price</tooltip>
+                                                        <config_path>payment/humm_payments/widgets/product_page/widget/priceselector</config_path>
+                                                        <sort_order>23</sort_order>
+                                                        <frontend_type>text</frontend_type>
+                                                        <show_in_default>1</show_in_default>
+                                                        <show_in_website>1</show_in_website>
+                                                        <show_in_store>1</show_in_store>
+                                                        <depends>
+                                                            <enabled>1</enabled>
+                                                        </depends>
+                                                    </priceselector>
+
+
                                                 </fields>
                                             </humm_payments_widgets_product_page_widget>
                                         </fields>

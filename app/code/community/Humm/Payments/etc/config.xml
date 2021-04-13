@@ -143,6 +143,7 @@
                         <widget>
                             <enabled>1</enabled>
                             <jssection>https://bpi.humm-au.com/au/content/scripts/price-info_sync.js</jssection>
+                            <priceselector></priceselector>
                             <selector>.availability.in-stock</selector>
                         </widget>
                     </product_page>
